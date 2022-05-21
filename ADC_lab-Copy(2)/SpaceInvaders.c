@@ -1,70 +1,17 @@
-// SpaceInvaders.c
-// Runs on LM4F120/TM4C123
-// Jonathan Valvano and Daniel Valvano
-// This is a starter project for the edX Lab 15
-// In order for other students to play your game
-// 1) You must leave the hardware configuration as defined
-// 2) You must not add/remove any files from the project
-// 3) You must add your code only this this C file
-// I.e., if you wish to use code from sprite.c or sound.c, move that code in this file
-// 4) It must compile with the 32k limit of the free Keil
-
-// This virtual Nokia project only runs on the real board, this project cannot be simulated
-// Instead of having a real Nokia, this driver sends Nokia
-//   commands out the UART to TExaSdisplay
-// The Nokia5110 is 48x84 black and white
-// pixel LCD to display text, images, or other information.
-
-// April 19, 2014
-// http://www.spaceinvaders.de/
-// sounds at http://www.classicgaming.cc/classics/spaceinvaders/sounds.php
-// http://www.classicgaming.cc/classics/spaceinvaders/playguide.php
-/* This example accompanies the books
-   "Embedded Systems: Real Time Interfacing to Arm Cortex M Microcontrollers",
-   ISBN: 978-1463590154, Jonathan Valvano, copyright (c) 2013
-
-   "Embedded Systems: Introduction to Arm Cortex M Microcontrollers",
-   ISBN: 978-1469998749, Jonathan Valvano, copyright (c) 2013
-
- Copyright 2014 by Jonathan W. Valvano, valvano@mail.utexas.edu
-    You may use, edit, run or distribute this file
-    as long as the above copyright notice remains
- THIS SOFTWARE IS PROVIDED "AS IS".  NO WARRANTIES, WHETHER EXPRESS, IMPLIED
- OR STATUTORY, INCLUDING, BUT NOT LIMITED TO, IMPLIED WARRANTIES OF
- MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE APPLY TO THIS SOFTWARE.
- VALVANO SHALL NOT, IN ANY CIRCUMSTANCES, BE LIABLE FOR SPECIAL, INCIDENTAL,
- OR CONSEQUENTIAL DAMAGES, FOR ANY REASON WHATSOEVER.
- For more information about my classes, my research, and my books, see
- http://users.ece.utexas.edu/~valvano/
- */
-// ******* Required Hardware I/O connections*******************
-// PA1, PA0 UART0 connected to PC through USB cable
-// Slide pot pin 1 connected to ground
-// Slide pot pin 2 connected to PE2/AIN1
-// Slide pot pin 3 connected to +3.3V 
-// fire button connected to PE0
-// special weapon fire button connected to PE1
-// 8*R resistor DAC bit 0 on PB0 (least significant bit)
-// 4*R resistor DAC bit 1 on PB1
-// 2*R resistor DAC bit 2 on PB2
-// 1*R resistor DAC bit 3 on PB3 (most significant bit)
-// LED on PB4
-// LED on PB5
-
 #include "tm4c123gh6pm11.h"
 #include "../TM4C123GH6PM.h"
-
 #include "Nokia5110.h"
 #include "Random.h"
 #include <stdlib.h>
 #include "../driver/gpio.h"
 #include "../ADC/adc_driver.h"
-
 #include "../Timer0/Timer_0.h"
-extern void (*PeriodicTask)(void); 
 
+
+extern void (*PeriodicTask)(void); 
 extern gpio_Configurations_t portsCfgs;
 extern GPIOA_Type * GPIO_PORTS_REGS [6];
+
 
 void DisableInterrupts(void); // Disable interrupts
 void EnableInterrupts(void);  // Enable interrupts
@@ -400,9 +347,8 @@ void Init_Game(void); // initalizing the game
 
 	int main(void){ 
 		
-  // you cannot use both the Scope and the virtual Nokia (both need UART0)
-	SYSCTL_RCGC2_R |= 0x7f; // activate port A
-  SYSCTL_RCGC2_R |= SYSCTL_RCGC2_GPIOA; // activate port A
+	SYSCTL_RCGC2_R |= 0x7f; // activate ports
+  SYSCTL_RCGC2_R |= SYSCTL_RCGC2_GPIOA; // activate ports
   delay = SYSCTL_RCGC2_R;     
 	Gpio_Init(&portsCfgs);
   ADCInit(SEQ3, RUNNING,AIN2);
@@ -425,8 +371,6 @@ void Init_Game(void); // initalizing the game
 
 }
 
-
-// You can use this timer only if you learn how it works
 
 
 void Delay100ms(unsigned long count){unsigned long volatile time;
@@ -540,13 +484,11 @@ short int isalive()
 			Nokia5110_PrintBMP(racer.posl,30 , BigExplosion0, 0);
 			Nokia5110_DisplayBuffer();
 			
-			// buzzer
-			//Gpio_SetData(GPIO_PORT_E, GPIO_PIN_2,GPIO_ENABLE);
+			// Clash Notification
 			GPIO_PORTS_REGS[GPIO_PORT_E]->DATA |= (1<<2);
 			t=ch;
 			Delay100ms(5);
-			//reset the buzzer
-			//Gpio_SetData(GPIO_PORT_E, GPIO_PIN_2,GPIO_DISABLE);
+			//reset 
 			GPIO_PORTS_REGS[GPIO_PORT_E]->DATA &=~ (1<<2);
 			
 			racer.life--;
@@ -591,8 +533,6 @@ void Start()
 			{
 				ADC0_ISC_R |= (1 << 3); //clear the interrupt bit
 				adcData = ADC0_SSFIFO3_R;
-				       // draw buffer
-				// delay 5 sec at 80 MHz
 		
 		  }
 		move_racer(adcData/99);
@@ -600,7 +540,6 @@ void Start()
 		Nokia5110_ClearBuffer();
 		score++;
 
-		//ADC0_PSSI_R |= (1 << 3);
 		Nokia5110_DisplayBuffer();      // draw buffer
 		Nokia5110_PrintBMP(0,46 , boundary, 0);
 		if(score<100)Nokia5110_PrintBMP(racer.posl,30+PLAYERH , PLAYER, 0);   //upgrade the car when the score reaches 100
