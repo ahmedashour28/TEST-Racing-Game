@@ -1,0 +1,18 @@
+Dependencies for Project 'Lab2', Target 'HelloLaunchPad': (DO NOT MODIFY !)
+F (.\main.c)(0x62866C26)(-c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\..-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\main.o --omf_browse .\main.crf --depend .\main.d)
+I (TExaS.h)(0x56993D24)
+I (adc_driver.h)(0x628660F9)
+F (.\startup.s)(0x5299F55C)(--cpu Cortex-M4 --pd "__EVAL SETA 1" -g --apcs=interwork -I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary--list .\startup.lst --xref -o .\startup.o --depend .\startup.d)
+F (.\adc_driver.c)(0x628660FA)(-c --cpu Cortex-M4 -D__EVAL -g -O0 --apcs=interwork --split_sections --signed_chars -I.. -I..\..\..-I C:\Keil\ARM\RV31\INC-I C:\Keil\ARM\CMSIS\Include-I C:\Keil\ARM\Inc\Luminary-Drvmdk -DPART_LM4F120H5QR-o .\adc_driver.o --omf_browse .\adc_driver.crf --depend .\adc_driver.d)
+I (..\../TM4C123GH6PM.h)(0x624AE477)
+I (C:\Keil\ARM\CMSIS\Include\core_cm4.h)(0x532C4C22)
+I (C:\Keil\ARM\ARMCC\include\stdint.h)(0x51C819B4)
+I (C:\Keil\ARM\CMSIS\Include\core_cmInstr.h)(0x532C4C22)
+I (C:\Keil\ARM\CMSIS\Include\core_cmFunc.h)(0x532C4C22)
+I (C:\Keil\ARM\CMSIS\Include\core_cm4_simd.h)(0x532C4C22)
+I (..\../system_TM4C123.h)(0x532C4878)
+I (adc_driver.h)(0x628660F9)
+F (..\TM4C123GH6PM.h)(0x624AE477)()
+F (.\adc_driver.h)(0x628660F9)()
+F (..\tm4c123gh6pmold.h)(0x00000000)()
+F (.\texas.o)(0x56993D24)()
